@@ -1,0 +1,46 @@
+<iframe id="appetize" title="Appetize Demo" scrolling="no" frameborder="0" 
+style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; margin: 0; padding: 0; overflow: hidden; z-index: 999999;"
+src="https://appetize.io/embed/demo_r0m5r98axtdhftx1hmmhq1c0m8?device=iphone14pro&deviceColor=black&record=false&scale=100&centered=true"></iframe>
+
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    // Array of available devices on Appetize.io
+    const devices = [
+        'iphone14pro',
+        'iphone13pro',
+        'iphone8',
+        'ipadpro',
+        'pixel7',
+        'pixel6',
+        'pixel4',
+        'galaxytab4'
+    ];
+
+    function updateDevice() {
+        const iframe = document.getElementById('appetize');
+        const currentSrc = new URL(iframe.src);
+        const currentDeviceIndex = devices.findIndex(device => 
+            currentSrc.searchParams.get('device') === device
+        );
+        
+        // Get next device (loop back to start if at end)
+        const nextIndex = (currentDeviceIndex + 1) % devices.length;
+        const nextDevice = devices[nextIndex];
+        
+        // Update the device parameter in the URL
+        currentSrc.searchParams.set('device', nextDevice);
+        iframe.src = currentSrc.toString();
+    }
+
+    // Change device every 180 seconds (3 minutes)
+    setInterval(updateDevice, 180000);
+</script>
